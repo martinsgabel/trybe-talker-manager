@@ -1,4 +1,4 @@
-const regexEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
+const regexEmail = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
 
 const emailValidation = (req, res, next) => {
     const { email } = req.body;
@@ -6,7 +6,7 @@ const emailValidation = (req, res, next) => {
       return next();
     }
 
-    return res.status(400).json({ message: 'invalid data' });
+    return res.status(400).json({ message: 'invalid email' });
 };
 
 module.exports = emailValidation;
