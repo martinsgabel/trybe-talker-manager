@@ -42,7 +42,21 @@ const changeList = async (post, id) => {
   return changedList;
 };
 
+const deleteTalker = async (id) => {
+  // reading
+  const talkerList = await fs.readFile(join(__dirname, filename), 'utf-8');
+  const talkerListJSON = JSON.parse(talkerList);
+
+  // inserting
+  const selectedTalker = talkerListJSON.findIndex((talker) => talker.id === Number(id));
+  // console.log(selectedTalker);
+  // console.log(talkerListJSON);
+  talkerListJSON.splice(selectedTalker, 1);
+  // console.log('UPDATED', talkerListJSON);
+};
+
 module.exports = {
   insertTalker,
   changeList,
+  deleteTalker,
 };
