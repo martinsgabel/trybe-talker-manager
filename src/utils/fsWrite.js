@@ -49,10 +49,8 @@ const deleteTalker = async (id) => {
 
   // inserting
   const selectedTalker = talkerListJSON.findIndex((talker) => talker.id === Number(id));
-  // console.log(selectedTalker);
-  // console.log(talkerListJSON);
   talkerListJSON.splice(selectedTalker, 1);
-  // console.log('UPDATED', talkerListJSON);
+  fs.writeFile(join(__dirname, filename), JSON.stringify(talkerListJSON));
 };
 
 module.exports = {
