@@ -6,7 +6,7 @@ const talkValidation = require('../middleware/talkValidation');
 const tokenValidation = require('../middleware/tokenvalidation');
 const watchedValidation = require('../middleware/watchedValidation');
 const { fsRead } = require('../utils/fsRead');
-const { insertTalker, changeList } = require('../utils/fsWrite');
+const { insertTalker, changeList, deleteTalker } = require('../utils/fsWrite');
 
 const router = express.Router();
 
@@ -55,6 +55,14 @@ router.put('/:id',
     const toUpdate = req.body;
     const changedTalker = await changeList(toUpdate, id);
     return res.status(200).json(changedTalker);
+});
+
+router.delete('/:id', 
+tokenValidation,
+async (req, res) => {
+  const { id } = req.params;
+  await deleteTalker(id);
+  return res.status(204).json();
 });
 
 module.exports = router;
