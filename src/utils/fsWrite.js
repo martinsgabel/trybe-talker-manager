@@ -16,9 +16,9 @@ const insertTalker = async (post) => {
   };
   talkerListJSON.push(newPost);
 
-  const content = await fs.writeFile(filename, JSON.stringify(talkerListJSON));
+  fs.writeFile(join(__dirname, filename), JSON.stringify(talkerListJSON));
 
-  return content;
+  return newPost;
 };
 
 module.exports = insertTalker;
