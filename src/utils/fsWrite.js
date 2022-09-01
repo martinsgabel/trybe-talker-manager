@@ -21,4 +21,28 @@ const insertTalker = async (post) => {
   return newPost;
 };
 
-module.exports = insertTalker;
+const changeList = async (post, id) => {
+  // reading
+  const talkerList = await fs.readFile(join(__dirname, filename), 'utf-8');
+  const talkerListJSON = JSON.parse(talkerList);
+  // update
+  let changedList;
+  for (let i = 0; i < talkerListJSON.length; i += 1) {
+    if (talkerListJSON[i].id === Number(id)) {
+      talkerListJSON[i].name = post.name;
+      talkerListJSON[i].age = post.age;
+      talkerListJSON[i].talk = post.talk;
+      talkerListJSON[i].talk.watchedAt = post.talk.watchedAt;
+      talkerListJSON[i].talk.rate = post.talk.rate;
+      changedList = talkerListJSON[i];
+    }
+  }
+
+  await fs.writeFile(join(__dirname, filename), JSON.stringify(talkerListJSON));
+  return changedList;
+};
+
+module.exports = {
+  insertTalker,
+  changeList,
+};
