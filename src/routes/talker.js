@@ -6,7 +6,7 @@ const talkValidation = require('../middleware/talkValidation');
 const tokenValidation = require('../middleware/tokenvalidation');
 const watchedValidation = require('../middleware/watchedValidation');
 const { fsRead } = require('../utils/fsRead');
-const insertTalker = require('../utils/fsWrite');
+const { insertTalker, changeList } = require('../utils/fsWrite');
 
 const router = express.Router();
 
@@ -41,6 +41,20 @@ router.post('/',
   const addedTalker = req.body;
   const addedTalkerList = await insertTalker(addedTalker);
   return res.status(201).json(addedTalkerList);
+});
+
+router.put('/:id', 
+  tokenValidation, 
+  nameValidation, 
+  ageValidation,
+  talkValidation,
+  watchedValidation,
+  rateValidation,
+  async (req, res) => {
+    const { id } = req.params;
+    const toUpdate = req.body;
+    const changedTalker = await changeList(toUpdate, id);
+    return res.status(200).json(changedTalker);
 });
 
 module.exports = router;
