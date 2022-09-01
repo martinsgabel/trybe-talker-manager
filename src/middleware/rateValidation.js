@@ -2,7 +2,7 @@ const rateValidation = (req, res, next) => {
   const talkField = req.body.talk;
   const rateValue = req.body.talk.rate;
 
-  if (!talkField.rate) {
+  if (talkField.rate === undefined) {
     return res.status(400).json({ message: 'O campo "rate" é obrigatório' });  
   }
 
